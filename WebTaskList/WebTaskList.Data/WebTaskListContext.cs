@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WebTaskList.Domain.Models;
 using System.Data.Entity;
 using WebTaskList.Data.Maps;
-
+    
 namespace WebTaskList.Data
 {
     public class WebTaskListContext : DbContext

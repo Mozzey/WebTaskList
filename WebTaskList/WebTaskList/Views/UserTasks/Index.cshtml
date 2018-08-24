@@ -27,10 +27,6 @@
     </tr>
 
 @foreach (var item in Model) {
-    if (item.UserId == ViewBag.UserId)
-    {
-
-
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.User.Email)
@@ -50,7 +46,6 @@
             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
-        }
     }
 
 </table>

@@ -211,6 +211,7 @@
     <Content Include="Views\UserTasks\Details.cshtml" />
     <Content Include="Views\UserTasks\Edit.cshtml" />
     <Content Include="Views\UserTasks\Index.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,12 +12,14 @@ namespace WebTaskList.Controllers
         private WebTaskListContext db = new WebTaskListContext();
 
         // GET: UserTasks
-        public ActionResult Index(User user)
+        public ActionResult Index()
         {
-            ViewBag.Name = user.Email;
-            var userTasks = db.UserTasks.Include(u => u.User);
-            return View(userTasks.ToList());
+            //Get username from cookie;
+            var username = "bob@bob.com";
+            var user = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
+            return View(user.FirstOrDefault()?.Tasks);
         }
+
 
         // GET: UserTasks/Details/5
         public ActionResult Details(int? id)

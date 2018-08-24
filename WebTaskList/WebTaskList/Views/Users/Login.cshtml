@@ -1,0 +1,28 @@
+﻿@model WebTaskList.Domain.Models.User
+
+@{ 
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm("Index", "Items", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.Email, new { @class = "moveInRight" })
+                @Html.TextBoxFor(model => Model.Email, new { @class = "form-control moveInLeft", @placeholder = "First Name" })
+            </div>
+            <br />
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(user => user.Password, new { @class = "moveInRight" })
+                @Html.TextBoxFor(user => user.Password, new { @class = "form-control moveInLeft", @placeholder = "Last Name" })
+            </div>
+        </div>
+        <br />
+    }
+</div>
