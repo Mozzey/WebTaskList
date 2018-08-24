@@ -51,10 +51,22 @@ namespace WebTaskList.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                var password = db.Users.Select(x => x.Password);
+                var id = db.Users.Select(x => x.Id);
+                if (password.ToString() == user.Password)
+                {
+                    return RedirectToAction("Index", "UserTasks", user);
+                }
+                else
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "UserTasks", user);
+                }
+                
             }
+            
 
             return View(user);
         }

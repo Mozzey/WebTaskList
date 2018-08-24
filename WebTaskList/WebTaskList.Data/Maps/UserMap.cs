@@ -10,6 +10,7 @@ namespace WebTaskList.Data.Maps
         {
             HasKey(x => x.Id);
             Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasMany(x => x.Tasks).WithRequired(x => x.User).HasForeignKey(x => x.UserId);
         }
     }
 }

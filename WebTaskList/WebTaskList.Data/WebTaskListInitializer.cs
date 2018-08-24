@@ -12,22 +12,33 @@ namespace WebTaskList.Data
     {
         protected override void Seed(WebTaskListContext context)
         {
-            var user = new User()
+            context.Users.Add(new User()
             {
                 Id = 1,
                 Email = "michael.cacciano@gmail.com",
                 Password = "password1"
-            };
-            context.Users.Add(user);
+            });
+            context.Users.Add(new User()
+            {
+                Id = 2,
+                Email = "michaelb@gmail.com",
+                Password = "password2"
+            });
             context.SaveChanges();
-            var task = new UserTask()
+            context.UserTasks.Add(new UserTask()
             {
                 Id = 1,
                 Description = "Task One",
                 DueDate = DateTime.Now,
                 UserId = 1
-            };
-            context.UserTasks.Add(task);
+            });
+            context.UserTasks.Add(new UserTask()
+            {
+                Id = 2,
+                Description = "Task Two",
+                DueDate = DateTime.Now,
+                UserId = 2
+            });
             context.SaveChanges();
 
             base.Seed(context);
