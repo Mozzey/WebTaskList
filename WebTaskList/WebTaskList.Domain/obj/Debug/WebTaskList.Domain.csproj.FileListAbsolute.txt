@@ -1,0 +1,6 @@
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Domain\bin\Debug\WebTaskList.Domain.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Domain\bin\Debug\WebTaskList.Domain.pdb
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Domain\obj\Debug\WebTaskList.Domain.csprojAssemblyReference.cache
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Domain\obj\Debug\WebTaskList.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Domain\obj\Debug\WebTaskList.Domain.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Domain\obj\Debug\WebTaskList.Domain.pdb

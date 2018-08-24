@@ -1,0 +1,14 @@
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\obj\Debug\WebTaskList.Data.csprojAssemblyReference.cache
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\obj\Debug\WebTaskList.Data.csproj.CoreCompileInputs.cache
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\WebTaskList.Data.dll.config
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\WebTaskList.Data.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\WebTaskList.Data.pdb
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\EntityFramework.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\WebTaskList.Domain.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\WebTaskList.Domain.pdb
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\EntityFramework.xml
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\obj\Debug\WebTaskList.Data.csproj.CopyComplete
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\obj\Debug\WebTaskList.Data.dll
+C:\Users\Mozzey\GrandCircus\Capstones\WebTaskList\WebTaskList\WebTaskList.Data\obj\Debug\WebTaskList.Data.pdb
