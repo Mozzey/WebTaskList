@@ -49,29 +49,62 @@ namespace WebTaskList.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Email,Password")] User user)
         {
+            HttpCookie passwordCookie;
+            if (Request.Cookies["passwordCookie"] == null)
+            {
+                passwordCookie = new HttpCookie("passwordCookie");
+                passwordCookie.Value = user.Email.ToString();
+                passwordCookie.Expires = DateTime.UtcNow.AddYears(1);
+            }
+            else
+            {
+                passwordCookie = Request.Cookies["passwordCookie"];
+            }
+
+            passwordCookie.Value = user.Password;
+            Response.Cookies.Add(passwordCookie);
             if (ModelState.IsValid)
             {
-                var password = db.Users.Select(x => x.Password);
-                var id = db.Users.Select(x => x.Id);
-                if (password.ToString() == user.Password)
+                if (db.Users.Any(x => x.Password == passwordCookie.Value))
                 {
-                    var userId = db.Users.Find(user.Id);
-                    return RedirectToAction("Index", "UserTasks");
+                    return RedirectToAction("Login", "Users");
                 }
                 else
                 {
                     db.Users.Add(user);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "UserTasks");
+                    return RedirectToAction("Login", "Users");
                 }
+                
             }
             return View(user);
         }
 
         public ActionResult Login()
         {
+            
             return View();
         }
+
+        //[HttpPost]
+        //public ActionResult Login(User user)
+        //{
+        //    HttpCookie idCookie;
+        //    if (Request.Cookies["idCookie"] == null)
+        //    {
+        //        idCookie = new HttpCookie("idCookie");
+        //        idCookie.Value = user.Id.ToString();
+        //        idCookie.Expires = DateTime.UtcNow.AddYears(1);
+        //    }
+        //    else
+        //    {
+        //        idCookie = Request.Cookies["idCookie"];
+        //    }
+
+        //    idCookie.Value = user.Id.ToString();
+        //    Response.Cookies.Add(idCookie);
+        //    return View();
+        //}
 
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)

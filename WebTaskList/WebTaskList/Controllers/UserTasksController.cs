@@ -1,6 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using WebTaskList.Data;
 using WebTaskList.Domain.Models;
@@ -11,13 +13,33 @@ namespace WebTaskList.Controllers
     {
         private WebTaskListContext db = new WebTaskListContext();
 
-        // GET: UserTasks
         public ActionResult Index()
         {
-            //Get username from cookie;
-            var username = "bob@bob.com";
-            var user = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
-            return View(user.FirstOrDefault()?.Tasks);
+            return View(db.UserTasks.ToList());
+        }
+
+        // GET: UserTasks
+        [HttpPost]
+        public ActionResult UserIndex(User user)
+        {
+            HttpCookie emailCookie;
+            if (Request.Cookies["emailCookie"] == null)
+            {
+                emailCookie = new HttpCookie("emailCookie");
+                emailCookie.Value = user.Email.ToString();
+                emailCookie.Expires = DateTime.UtcNow.AddYears(1);
+            }
+            else
+            {
+                emailCookie = Request.Cookies["emailCookie"];
+            }
+
+            emailCookie.Value = user.Email;
+            Response.Cookies.Add(emailCookie);
+            var username = emailCookie.Value;
+            var specificUser = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
+            
+            return View(specificUser.FirstOrDefault()?.Tasks.ToList());
         }
 
 
