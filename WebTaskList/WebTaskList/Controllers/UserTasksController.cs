@@ -13,9 +13,18 @@ namespace WebTaskList.Controllers
     {
         private WebTaskListContext db = new WebTaskListContext();
 
-        public ActionResult Index()
+
+        public ActionResult Index(string searchBy, string search, User user)
         {
-            return View(db.UserTasks.ToList());
+            if (searchBy == "Email")
+            {
+                return View(db.UserTasks.Where(x => x.Id.ToString() == search || search == null).ToList());
+            }
+            else
+            {
+                return View(db.UserTasks.ToList());
+            }
+            
         }
 
         // GET: UserTasks
