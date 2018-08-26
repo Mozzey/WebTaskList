@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebTaskList.Data;
 using WebTaskList.Domain.Models;
+using WebTaskList.Utility;
 
 namespace WebTaskList.Controllers
 {
@@ -14,11 +15,15 @@ namespace WebTaskList.Controllers
         private WebTaskListContext db = new WebTaskListContext();
 
 
-        public ActionResult Index(string searchBy, string search, User user)
+        public ActionResult Index(string searchBy, string search)
         {
-            if (searchBy == "Email")
+            if (searchBy == "Id")
             {
                 return View(db.UserTasks.Where(x => x.Id.ToString() == search || search == null).ToList());
+            }
+            else if (searchBy == "Desc")
+            {
+                return View(db.UserTasks.Where(x => x.Description.Contains(search)).ToList());
             }
             else
             {
@@ -32,15 +37,15 @@ namespace WebTaskList.Controllers
         public ActionResult UserIndex(User user)
         {
             HttpCookie emailCookie;
-            if (Request.Cookies["emailCookie"] == null)
+            if (Request.Cookies[Cookies.EmailCookie] == null)
             {
-                emailCookie = new HttpCookie("emailCookie");
+                emailCookie = new HttpCookie(Cookies.EmailCookie);
                 emailCookie.Value = user.Email.ToString();
                 emailCookie.Expires = DateTime.UtcNow.AddYears(1);
             }
             else
             {
-                emailCookie = Request.Cookies["emailCookie"];
+                emailCookie = Request.Cookies[Cookies.EmailCookie];
             }
 
             emailCookie.Value = user.Email;
@@ -85,7 +90,7 @@ namespace WebTaskList.Controllers
             {
                 db.UserTasks.Add(userTask);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("UserIndex");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebTaskList.Data;
 using WebTaskList.Domain.Models;
+using WebTaskList.Utility;
 
 namespace WebTaskList.Controllers
 {
@@ -50,15 +51,15 @@ namespace WebTaskList.Controllers
         public ActionResult Create([Bind(Include = "Id,Email,Password")] User user)
         {
             HttpCookie passwordCookie;
-            if (Request.Cookies["passwordCookie"] == null)
+            if (Request.Cookies[Cookies.PasswordCookie] == null)
             {
-                passwordCookie = new HttpCookie("passwordCookie");
+                passwordCookie = new HttpCookie(Cookies.PasswordCookie);
                 passwordCookie.Value = user.Email.ToString();
                 passwordCookie.Expires = DateTime.UtcNow.AddYears(1);
             }
             else
             {
-                passwordCookie = Request.Cookies["passwordCookie"];
+                passwordCookie = Request.Cookies[Cookies.PasswordCookie];
             }
 
             passwordCookie.Value = user.Password;
