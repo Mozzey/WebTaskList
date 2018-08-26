@@ -6,11 +6,10 @@
 <div class="container">
 
 
-    <h2>Welcome @ViewBag.Name</h2>
+    <h2>Welcome @ViewBag.UserName</h2>
 
     <p>
-        <a href="~/UserTasks/Create" class="btn btn-success">Add Task</a>
-        @*@Html.ActionLink("Create New", "Create")*@
+        <a href="@Url.Action("Create", "UserTasks")" class="btn btn-success">Add Task</a>
     </p>
 
     <p>

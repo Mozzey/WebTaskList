@@ -69,6 +69,7 @@ namespace WebTaskList.Controllers
         public ActionResult Index(string searchBy, string search)
         {
             var email = HttpContext.Request.Cookies[Cookies.EmailCookie].Value;
+            ViewBag.UserName = email;
             if (searchBy == "Id")
             {
                 return View(db.UserTasks.Where(x => x.Id.ToString() == search || search == null).ToList());
@@ -137,8 +138,10 @@ namespace WebTaskList.Controllers
         // GET: UserTasks/Create
         public ActionResult Create()
         {
+            var userName = HttpContext.Request.Cookies[Cookies.EmailCookie].Value;
             var userId = HttpContext.Request.Cookies[Cookies.IdCookie].Value;
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.UserId = Convert.ToInt32(userId);
+            ViewBag.UserName = userName;
             return View();
         }
 
@@ -149,6 +152,7 @@ namespace WebTaskList.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,DueDate,Complete,UserId")] UserTask userTask)
         {
+            
             if (ModelState.IsValid)
             {
                 db.UserTasks.Add(userTask);
@@ -156,7 +160,7 @@ namespace WebTaskList.Controllers
                 
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
             return View(userTask);
         }
 
