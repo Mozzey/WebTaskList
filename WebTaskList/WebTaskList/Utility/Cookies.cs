@@ -9,5 +9,6 @@ namespace WebTaskList.Utility
     {
         public static string EmailCookie { get; } = "EmailCookie";
         public static string PasswordCookie { get; } = "PasswordCookie";
+        public static string IdCookie { get; } = "IdCookie";
     }
 }

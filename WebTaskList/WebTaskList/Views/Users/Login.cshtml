@@ -10,7 +10,7 @@
 <h1 class="text-center my-5">Login</h1>
 
 
-@using (Html.BeginForm("UserIndex", "UserTasks", FormMethod.Post, new { @name = "userLogIn", @class = "col-md-offset-5" }))
+@using (Html.BeginForm("Index", "UserTasks", FormMethod.Post, new { @name = "userLogIn", @class = "col-md-offset-5" }))
 {
     @Html.ValidationSummary(true)
 <div class="container">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -15,8 +16,10 @@ namespace WebTaskList.Controllers
         private WebTaskListContext db = new WebTaskListContext();
 
 
+
         public ActionResult Index(string searchBy, string search)
         {
+            var email = HttpContext.Request.Cookies[Cookies.EmailCookie].Value;
             if (searchBy == "Id")
             {
                 return View(db.UserTasks.Where(x => x.Id.ToString() == search || search == null).ToList());
@@ -27,14 +30,12 @@ namespace WebTaskList.Controllers
             }
             else
             {
-                return View(db.UserTasks.ToList());
+                return View(db.UserTasks.Where(x => x.User.Email == email).ToList());
             }
-            
-        }
 
-        // GET: UserTasks
+        }
         [HttpPost]
-        public ActionResult UserIndex(User user)
+        public ActionResult Index(User user)
         {
             HttpCookie emailCookie;
             if (Request.Cookies[Cookies.EmailCookie] == null)
@@ -51,11 +52,50 @@ namespace WebTaskList.Controllers
             emailCookie.Value = user.Email;
             Response.Cookies.Add(emailCookie);
             var username = emailCookie.Value;
-            var specificUser = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
-            
-            return View(specificUser.FirstOrDefault()?.Tasks.ToList());
+            //var specificUser = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
+            return View(db.Users.FirstOrDefault()?.Tasks.Where(x => x.User.Email == username).ToList());
         }
 
+        //public ActionResult UserIndex(string searchBy, string search)
+        //{
+        //    var email = HttpContext.Request.Cookies[Cookies.EmailCookie].Value;
+        //    if (searchBy == "Id")
+        //    {
+        //        return View(db.UserTasks.Where(x => x.Id.ToString() == search || search == null).ToList());
+        //    }
+        //    else if (searchBy == "Desc")
+        //    {
+        //        return View(db.UserTasks.Where(x => x.Description.Contains(search)).ToList());
+        //    }
+        //    else
+        //    {
+        //        return View(db.UserTasks.Where(x => x.User.Email == email).ToList());
+        //    }
+
+        //}
+
+        // GET: UserTasks
+        //[HttpPost]
+        //public ActionResult UserIndex(User user)
+        //{
+        //    HttpCookie emailCookie;
+        //    if (Request.Cookies[Cookies.EmailCookie] == null)
+        //    {
+        //        emailCookie = new HttpCookie(Cookies.EmailCookie);
+        //        emailCookie.Value = user.Email.ToString();
+        //        emailCookie.Expires = DateTime.UtcNow.AddYears(1);
+        //    }
+        //    else
+        //    {
+        //        emailCookie = Request.Cookies[Cookies.EmailCookie];
+        //    }
+
+        //    emailCookie.Value = user.Email;
+        //    Response.Cookies.Add(emailCookie);
+        //    var username = emailCookie.Value;
+        //    //var specificUser = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
+        //    return View(db.Users.FirstOrDefault()?.Tasks.Where(x => x.User.Email == username).ToList());
+        //}
 
         // GET: UserTasks/Details/5
         public ActionResult Details(int? id)
@@ -90,12 +130,37 @@ namespace WebTaskList.Controllers
             {
                 db.UserTasks.Add(userTask);
                 db.SaveChanges();
-                return RedirectToAction("UserIndex");
+                
+                return RedirectToAction("Index");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
             return View(userTask);
         }
+
+        //public ActionResult UserCreate()
+        //{
+        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult UserCreate([Bind(Include = "Id,Description,DueDate,Complete,UserId")] UserTask userTask)
+        //{
+            
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.UserTasks.Add(userTask);
+        //        db.SaveChanges();
+
+
+        //        return RedirectToAction("UserIndex");
+        //    }
+
+        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
+        //    return View(userTask);
+
+        //}
 
         // GET: UserTasks/Edit/5
         public ActionResult Edit(int? id)
