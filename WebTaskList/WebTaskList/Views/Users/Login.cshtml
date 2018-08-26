@@ -7,37 +7,41 @@
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    <h1 class="text-center my-5">Login</h1>
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 15%;">
+            <h1 class="col-md-offset-5 moveInLeft">Login</h1>
+        </div>
+        
+    </div>
+    
 </div>
+<br />
 
 
-<div class="container-fluid">
+<div class="container">
 
 
-    @using (Html.BeginForm("StoreLogin", "UserTasks", FormMethod.Post, new { @name = "userLogIn", @class = "col-md-offset-5" }))
+    @using (Html.BeginForm("StoreLogin", "UserTasks", FormMethod.Post, new { @name = "userLogIn" }))
     {
         @Html.ValidationSummary(true)
-        <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-offset-4">
                     @Html.LabelFor(model => Model.Email, new { @class = "moveInRight" })
-                    @Html.TextBoxFor(model => Model.Email, new { @class = "form-control moveInLeft", @placeholder = "First Name" })
+                    @Html.TextBoxFor(model => Model.Email, new { @class = "form-control moveInLeft", @placeholder = "Email" })
                 </div>
-                <br />
             </div>
             <br />
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-offset-4">
                     @Html.LabelFor(user => user.Password, new { @class = "moveInRight" })
-                    @Html.TextBoxFor(user => user.Password, new { @class = "form-control moveInLeft", @placeholder = "Last Name" })
+                    @Html.TextBoxFor(user => user.Password, new { @class = "form-control moveInLeft", @placeholder = "Password" })
                 </div>
             </div>
             <br />
             <div class="form-group">
-                <div class="col-md-10">
-                    <input type="submit" value="Login" class="btn btn-default" />
+                <div class="col-md-offset-5">
+                    <input type="submit" value="Login" class="btn btn-primary" />
                 </div>
             </div>
-        </div>
     }
 </div>    
