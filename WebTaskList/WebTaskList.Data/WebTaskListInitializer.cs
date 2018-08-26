@@ -29,7 +29,7 @@ namespace WebTaskList.Data
             {
                 Id = 1,
                 Description = "Task One",
-                DueDate = DateTime.Now,
+                DueDate = DateTime.Now.AddYears(1),
                 Complete = true,
                 UserId = 1
             });
@@ -37,14 +37,14 @@ namespace WebTaskList.Data
             {
                 Id = 2,
                 Description = "Task Two",
-                DueDate = DateTime.Now,
+                DueDate = DateTime.Now.AddYears(1),
                 UserId = 1
             });
             context.UserTasks.Add(new UserTask()
             {
                 Id = 3,
                 Description = "Task Three",
-                DueDate = DateTime.Now,
+                DueDate = DateTime.Now.AddYears(1),
                 UserId = 2
             });
             context.SaveChanges();
