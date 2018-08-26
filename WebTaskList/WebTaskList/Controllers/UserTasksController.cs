@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebTaskList.Data;
 using WebTaskList.Domain.Models;
+using WebTaskList.Models;
 using WebTaskList.Utility;
 
 namespace WebTaskList.Controllers
@@ -15,6 +16,54 @@ namespace WebTaskList.Controllers
     {
         private WebTaskListContext db = new WebTaskListContext();
 
+        int ID = 0;
+        public ActionResult StoreLogin(LogInModel login)
+        {
+            var user = db.Users
+                    .Where(p => p.Email == login.Email)
+                    .Select(p => new { p.Id, p.Password, p.Email });
+
+            foreach (var column in user)
+            {
+                if (login.Password == column.Password && login.Email == column.Email)
+                {
+                    HttpCookie userIdCookie;
+                    if (Request.Cookies[Cookies.IdCookie] == null)
+                    {
+                        userIdCookie = new HttpCookie(Cookies.IdCookie);
+                        userIdCookie.Value = "0";
+                        userIdCookie.Expires = DateTime.UtcNow.AddYears(1);
+                    }
+                    else
+                    {
+                        userIdCookie = Request.Cookies[Cookies.IdCookie];
+                    }
+
+                    ID = column.Id;
+                    userIdCookie.Value = ID.ToString();
+                    Response.Cookies.Add(userIdCookie);
+
+                    HttpCookie emailCookie;
+                    if (Request.Cookies[Cookies.EmailCookie] == null)
+                    {
+                        emailCookie = new HttpCookie(Cookies.EmailCookie);
+                        emailCookie.Value = "";
+                        emailCookie.Expires = DateTime.UtcNow.AddYears(1);
+                    }
+                    else
+                    {
+                        emailCookie = Request.Cookies[Cookies.EmailCookie];
+                    }
+
+                    emailCookie.Value = column.Email;
+                    Response.Cookies.Add(emailCookie);
+
+                    return RedirectToAction("Index", "UserTasks");
+                }
+            }
+            //string alert = "The username or password is incorrect. Please try again!";
+            return RedirectToAction("Login", "Users");
+        }
 
 
         public ActionResult Index(string searchBy, string search)
@@ -51,51 +100,24 @@ namespace WebTaskList.Controllers
 
             emailCookie.Value = user.Email;
             Response.Cookies.Add(emailCookie);
+            HttpCookie userIdCookie;
+            if (Request.Cookies["UserIdCookie"] == null)
+            {
+                userIdCookie = new HttpCookie("UserIdCookie");
+                userIdCookie.Value = user.Id.ToString();
+                userIdCookie.Expires = DateTime.UtcNow.AddYears(1);
+            }
+            else
+            {
+                userIdCookie = Request.Cookies["UserIdCookie"];
+            }
+
+            userIdCookie.Value = user.Id.ToString();
+            Response.Cookies.Add(userIdCookie);
             var username = emailCookie.Value;
             //var specificUser = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
             return View(db.Users.FirstOrDefault()?.Tasks.Where(x => x.User.Email == username).ToList());
         }
-
-        //public ActionResult UserIndex(string searchBy, string search)
-        //{
-        //    var email = HttpContext.Request.Cookies[Cookies.EmailCookie].Value;
-        //    if (searchBy == "Id")
-        //    {
-        //        return View(db.UserTasks.Where(x => x.Id.ToString() == search || search == null).ToList());
-        //    }
-        //    else if (searchBy == "Desc")
-        //    {
-        //        return View(db.UserTasks.Where(x => x.Description.Contains(search)).ToList());
-        //    }
-        //    else
-        //    {
-        //        return View(db.UserTasks.Where(x => x.User.Email == email).ToList());
-        //    }
-
-        //}
-
-        // GET: UserTasks
-        //[HttpPost]
-        //public ActionResult UserIndex(User user)
-        //{
-        //    HttpCookie emailCookie;
-        //    if (Request.Cookies[Cookies.EmailCookie] == null)
-        //    {
-        //        emailCookie = new HttpCookie(Cookies.EmailCookie);
-        //        emailCookie.Value = user.Email.ToString();
-        //        emailCookie.Expires = DateTime.UtcNow.AddYears(1);
-        //    }
-        //    else
-        //    {
-        //        emailCookie = Request.Cookies[Cookies.EmailCookie];
-        //    }
-
-        //    emailCookie.Value = user.Email;
-        //    Response.Cookies.Add(emailCookie);
-        //    var username = emailCookie.Value;
-        //    //var specificUser = db.Users.Where(x => x.Email == username).Include(x => x.Tasks);
-        //    return View(db.Users.FirstOrDefault()?.Tasks.Where(x => x.User.Email == username).ToList());
-        //}
 
         // GET: UserTasks/Details/5
         public ActionResult Details(int? id)
@@ -115,6 +137,7 @@ namespace WebTaskList.Controllers
         // GET: UserTasks/Create
         public ActionResult Create()
         {
+            var userId = HttpContext.Request.Cookies[Cookies.IdCookie].Value;
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             return View();
         }
@@ -133,34 +156,9 @@ namespace WebTaskList.Controllers
                 
                 return RedirectToAction("Index");
             }
-
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
             return View(userTask);
         }
-
-        //public ActionResult UserCreate()
-        //{
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult UserCreate([Bind(Include = "Id,Description,DueDate,Complete,UserId")] UserTask userTask)
-        //{
-            
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.UserTasks.Add(userTask);
-        //        db.SaveChanges();
-
-
-        //        return RedirectToAction("UserIndex");
-        //    }
-
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
-        //    return View(userTask);
-
-        //}
 
         // GET: UserTasks/Edit/5
         public ActionResult Edit(int? id)

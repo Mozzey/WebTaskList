@@ -30,6 +30,7 @@ namespace WebTaskList.Data
                 Id = 1,
                 Description = "Task One",
                 DueDate = DateTime.Now,
+                Complete = true,
                 UserId = 1
             });
             context.UserTasks.Add(new UserTask()

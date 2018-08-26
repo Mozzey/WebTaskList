@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebTaskList.Data;
 using WebTaskList.Domain.Models;
+using WebTaskList.Models;
 using WebTaskList.Utility;
 
 namespace WebTaskList.Controllers
