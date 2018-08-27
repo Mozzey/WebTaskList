@@ -167,6 +167,7 @@ namespace WebTaskList.Controllers
         // GET: UserTasks/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -176,7 +177,8 @@ namespace WebTaskList.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", userTask.UserId);
+            var userId = HttpContext.Request.Cookies[Cookies.IdCookie].Value;
+            ViewBag.UserId = Convert.ToInt32(userId);
             return View(userTask);
         }
 
